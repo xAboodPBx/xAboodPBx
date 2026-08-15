@@ -1,18 +1,18 @@
-About Me
+# About Me
 
-"My Photo" (https://xaboodpbx.vercel.app/my.png)
+![My Photo](https://xaboodpbx.vercel.app/my.png)
 
-Who Am I
+## Who Am I
 
-Hi, I'm Abood
+Hi, I'm **Abod**
 
 I'm a programmer and technology enthusiast with a strong interest in software development, operating systems, Linux, networking, servers, and open source
 
-My passion for programming started when I was around 7 years old and since then I have always been interested in learning how software and computer systems work
+My passion for programming started when I was around **7 years old** and since then I have always been interested in learning how software and computer systems work
 
 From an early age, I also had a strong interest in operating systems and the technologies behind them which led me to explore different systems, development environments, servers, networking, and system level technologies
 
-What I Do
+## What I Do
 
 I work on different software projects across multiple areas of development
 
@@ -22,7 +22,7 @@ I also work with Minecraft server development including server software, plugins
 
 My projects are not limited to one specific technology or platform and I enjoy exploring different areas of software development depending on the project
 
-Open Source
+## Open Source
 
 Open source is an important part of my interests
 
@@ -32,7 +32,7 @@ I try to contribute as much as I can by creating projects, improving existing so
 
 I always try to be a contributor rather than only a user
 
-My Passion For Systems
+## My Passion For Systems
 
 Since I was young I have been fascinated by operating systems and how computers work internally
 
@@ -40,14 +40,15 @@ I enjoy exploring how software communicates with hardware, how operating systems
 
 This interest led me to work with Linux, Android, server environments, networking, development environments, and other system related technologies
 
-Technologies And Environments
+## Technologies And Environments
 
 My work spans several areas of software development including web development, server development, system software, networking, automation, and open source development
 
 I use environments and platforms such as Linux, Android, Termux, cloud and hosting platforms, and various server environments depending on the project
 
 
-My Goal
+
+## My Goal
 
 My goal is to become a better programmer and continue developing my knowledge in software engineering and systems
 
@@ -55,13 +56,13 @@ I want to understand technology not only from the surface but also how it works 
 
 I am constantly learning new technologies, experimenting with new ideas, building projects, and trying to contribute to the open source community as much as possible
 
-Projects
+## Projects
 
 I work on different projects including web applications, server software, developer tools, plugins, bots, system related projects, networking tools, and other experimental software
 
 I enjoy taking an idea and turning it into something functional that can be used, improved, and shared with others
 
-Keep Learning
+## Keep Learning
 
 Programming has been a passion of mine since I was a child and I continue to learn something new with every project
 
