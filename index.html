@@ -1,1 +1,546 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حياك الله في موقعي | Dev Dark</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@300;400;600&display=swap');
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0c0f;
+            --surface: #111418;
+            --surface-2: #171c22;
+            --border: #1e242c;
+            --text: #e8edf2;
+            --text-dim: #8b949e;
+            --accent: #00e5a0;
+            --accent-2: #00b8ff;
+            --discord: #5865F2;
+            --telegram: #229ED9;
+            --github: #e6edf3;
+        }
+
+        body {
+            background: var(--bg);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(0, 229, 160, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 85% 80%, rgba(0, 184, 255, 0.03) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0c0f 0%, #0d1014 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'IBM Plex Sans Arabic', 'IBM Plex Mono', monospace, sans-serif;
+            color: var(--text);
+            padding: 24px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(30, 36, 44, 0.25) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 36, 44, 0.25) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+        }
+
+        .terminal-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 640px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 
+                0 0 0 1px rgba(0, 0, 0, 0.3),
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 80px rgba(0, 229, 160, 0.04);
+            overflow: hidden;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .terminal-header {
+            background: var(--surface-2);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .terminal-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), transparent);
+            opacity: 0.3;
+        }
+
+        .window-dots {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .dot-red {
+            background: #ff5f56;
+            box-shadow: 0 0 8px rgba(255, 95, 86, 0.4);
+        }
+
+        .dot-yellow {
+            background: #ffbd2e;
+            box-shadow: 0 0 8px rgba(255, 189, 46, 0.4);
+        }
+
+        .dot-green {
+            background: #27c93f;
+            box-shadow: 0 0 8px rgba(39, 201, 63, 0.4);
+        }
+
+        .terminal-title {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .terminal-title .blink {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+            box-shadow: 0 0 12px var(--accent);
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(1.3);
+            }
+        }
+
+        .terminal-body {
+            padding: 40px 32px 36px;
+            text-align: center;
+            position: relative;
+        }
+
+        .terminal-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.5;
+            border-radius: 2px;
+        }
+
+        .greeting-icon {
+            font-size: 56px;
+            line-height: 1;
+            margin-bottom: 16px;
+            display: block;
+            animation: float-icon 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(0, 229, 160, 0.3));
+        }
+
+        @keyframes float-icon {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .greeting-text {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, #c8d6e5 50%, #a0b4c8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .greeting-sub {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 0.5px;
+            margin-bottom: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .greeting-sub .arrow {
+            color: var(--accent);
+            font-weight: 700;
+            animation: arrow-move 1.2s ease-in-out infinite;
+        }
+
+        @keyframes arrow-move {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(3px);
+            }
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 229, 160, 0.05), rgba(0, 184, 255, 0.05));
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            border-radius: 8px;
+        }
+
+        .link-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(0, 229, 160, 0.1);
+        }
+
+        .link-card:hover::before {
+            opacity: 1;
+        }
+
+        .link-card.discord:hover {
+            border-color: var(--discord);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(88, 101, 242, 0.2);
+        }
+
+        .link-card.telegram:hover {
+            border-color: var(--telegram);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(34, 158, 217, 0.2);
+        }
+
+        .link-card.github:hover {
+            border-color: var(--github);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 20px rgba(230, 237, 243, 0.15);
+        }
+
+        .link-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .link-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .link-card:hover .link-icon {
+            transform: scale(1.1);
+        }
+
+        .icon-discord {
+            background: rgba(88, 101, 242, 0.15);
+            color: var(--discord);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+        }
+
+        .icon-telegram {
+            background: rgba(34, 158, 217, 0.15);
+            color: var(--telegram);
+            border: 1px solid rgba(34, 158, 217, 0.3);
+        }
+
+        .icon-github {
+            background: rgba(230, 237, 243, 0.1);
+            color: var(--github);
+            border: 1px solid rgba(230, 237, 243, 0.2);
+        }
+
+        .link-label {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+        }
+
+        .link-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        .link-url {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            letter-spacing: 0.2px;
+            direction: ltr;
+            opacity: 0.7;
+        }
+
+        .link-arrow {
+            position: relative;
+            z-index: 1;
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            transition: all 0.3s ease;
+            font-weight: 300;
+            opacity: 0.6;
+        }
+
+        .link-card:hover .link-arrow {
+            color: var(--accent);
+            transform: translateX(-4px);
+            opacity: 1;
+        }
+
+        .footer-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            letter-spacing: 0.5px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            position: relative;
+        }
+
+        .footer-status::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: var(--accent);
+            opacity: 0.3;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+
+        .version-tag {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 480px) {
+            .terminal-body {
+                padding: 28px 18px 24px;
+            }
+
+            .greeting-text {
+                font-size: 1.7rem;
+            }
+
+            .greeting-icon {
+                font-size: 44px;
+            }
+
+            .link-card {
+                padding: 13px 16px;
+                font-size: 0.85rem;
+            }
+
+            .link-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 15px;
+            }
+
+            .link-url {
+                font-size: 0.65rem;
+                max-width: 140px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .terminal-header {
+                padding: 10px 14px;
+            }
+
+            .terminal-title {
+                font-size: 9px;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .terminal-body {
+                padding: 32px 24px 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="window-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+            </div>
+            <div class="terminal-title">
+                <span class="blink"></span>
+                dev@v4x:~$ terminal
+            </div>
+        </div>
+        <div class="terminal-body">
+            <span class="greeting-icon">⌨️</span>
+            <h1 class="greeting-text">حياك الله في موقعي</h1>
+            <p class="greeting-sub">
+                <span>تواصل معي عبر المنصات التالية</span>
+                <span class="arrow">⌄</span>
+            </p>
+            <div class="links-grid">
+                <a href="https://discord.gg/qS6f3UKb" class="link-card discord" target="_blank" rel="noopener noreferrer">
+                    <div class="link-left">
+                        <div class="link-icon icon-discord">D</div>
+                        <div class="link-label">
+                            <span class="link-name">Discord</span>
+                            <span class="link-url">discord.gg/qS6f3UKb</span>
+                        </div>
+                    </div>
+                    <span class="link-arrow">←</span>
+                </a>
+                <a href="https://t.me/v4x_q" class="link-card telegram" target="_blank" rel="noopener noreferrer">
+                    <div class="link-left">
+                        <div class="link-icon icon-telegram">T</div>
+                        <div class="link-label">
+                            <span class="link-name">Telegram</span>
+                            <span class="link-url">t.me/v4x_q</span>
+                        </div>
+                    </div>
+                    <span class="link-arrow">←</span>
+                </a>
+                <a href="https://github.com/xAboodPBx" class="link-card github" target="_blank" rel="noopener noreferrer">
+                    <div class="link-left">
+                        <div class="link-icon icon-github">G</div>
+                        <div class="link-label">
+                            <span class="link-name">GitHub</span>
+                            <span class="link-url">github.com/xAboodPBx</span>
+                        </div>
+                    </div>
+                    <span class="link-arrow">←</span>
+                </a>
+            </div>
+            <div class="footer-status">
+                <span class="status-dot"></span>
+                <span>online</span>
+                <span class="version-tag">v1.0.0</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
