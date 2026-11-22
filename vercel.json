@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "api.nwnvw.xyz"
+        }
+      ],
+      "destination": "/api/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "api.nwnvw.xyz"
+        }
+      ],
+      "destination": "/api/$1"
+    }
+  ]
+}
